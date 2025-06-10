@@ -1,9 +1,9 @@
 ---
-title: Creating a command
-sidebar_position: 1
+title: Creating a Command
+sidebar_position: 3
 ---
 
-# Creating a command
+# Creating a Command
 Creating a command in qASIC is simple, or complex depending on what you want.
 
 ## Using an Attribute
@@ -103,6 +103,8 @@ public class Cmd_Example : qCommandLogic
 
 The `qCommandMark` attribute is a way of letting the console know which command to add. Without the mark, the command wouldn't be found and you would have to manually add it to the command list (which might be something you want to do).
 
+---
+
 ```csharp
 public override string CommandName => "example";
 public override string Aliases => new string[] { "alias" };
@@ -111,6 +113,8 @@ public override string DetailedDescription => "This is a detailed description fo
 ```
 
 This is all of the info for the command. Fill this out as you like.
+
+---
 
 ```csharp
 public override ACData CommandAutocomplete => new ACData()
@@ -125,6 +129,7 @@ This property defines all the different ways the command can be executed. In thi
 If your command doesn't take any arguments, you can remove this from your code.
 
 To add a new variant of your command, simply continue from the 3rd line as so:
+
 ```csharp
 public override ACData CommandAutocomplete => new ACData()
     .AddVariant().Finish()
@@ -132,7 +137,16 @@ public override ACData CommandAutocomplete => new ACData()
     .AddVariant().AddType<string>("message").AddType<TimeSpan>("time").Finish();
 ```
 
-TODO: explain how ACData works better.
+You can also create different variants depending on the specified argument:
+
+```csharp
+public override ACData CommandAutocomplete => new ACData()
+    .AddVariant().AddOptions("mode", "set", "setandsave").AddType<string>("key").AddType<float>("value").Finish()
+    .AddVariant().AddOptions("mode", "get").AddType<string>("key").Finish()
+    .AddVariant().AddOptions("mode", "list").Finish();
+```
+
+---
 
 ```csharp
 public override object Run(qConsoleCommandContext context)
@@ -143,6 +157,8 @@ public override object Run(qConsoleCommandContext context)
 ```
 
 This is the method that will be called when executing the command. It's recommended to begin with checking for the argument count with `context.CheckForArgumentCount`, `context.CheckForArgumentCountMin` or `context.CheckForArgumentCountMax`.
+
+---
 
 ```csharp
 if (context.Length == 1)
@@ -168,6 +184,42 @@ return null;
 ```
 
 Every command can return a value if it wants to. This can be useful if you want to use the console via code for retrieving data.
+
+## Async commands
+
+qConsole supports async commands.
+
+```csharp
+[qCommand("example")]
+public async Task Cmd_AsyncExample(qConsoleCommandContext context)
+{
+    context.Logs.Log("Please wait for 3 seconds.");
+    await Task.Delay(3000);
+    context.Logs.Log("Task completed!");
+}
+```
+
+```csharp
+[qCommandMark]
+public class Cmd_AsyncExample : qCommandLogic
+{
+    ...
+
+    public async Task<object> Run(qConsoleCommandContext context)
+    {
+        context.CheckForArgumentCount(1);
+
+        var time = context[0].GetValue<TimeSpan>();
+
+        context.Logs.Log("Please wait...");
+        await Task.Delay(time);
+        context.Logs.Log("Finished.");
+        return time;
+    }
+}
+```
+
+The console will become unresponsive until the command finishes executing. If you're using `qConsole.ExecuteAsync`, it's going to wait until the command finishes executing and then return it's value. If you would like to check if you are able to execute a command, check if `qConsole.CanParseAndExecute` is set to `true`.
 
 ## Tips
 
@@ -229,124 +281,56 @@ public override object Run(qConsoleCommandContext context)
 Combined with [updating logs](logging#update-a-log), it allows you to construct really powerful commands. Here's how we used it to create the `changeoption` command.
 
 ```csharp
-public class ChangeOption : OptionsCommand
+qLog listLog;
+Options.OptionsList.ListItem targetOption;
+TextMenu<Options.OptionsList.ListItem> menu;
+
+public override object Run(qCommandContext context)
 {
-    public override string CommandName => "changeoption";
-    public override string Description => "Changed the value of an option.";
-
-    KeyPrompt navigationPrompt = new KeyPrompt();
-    TextPrompt valuePrompt = new TextPrompt();
-
-    qLog listLog;
-    int index = 0;
-    Options.OptionsList.ListItem targetOption;
-    List<Options.OptionsList.ListItem> items;
-
-    public override object Run(qCommandContext context)
+    //Prompts
+    if (context.prompt is KeyPrompt key)
     {
-        //Prompt
-        if (context.prompt == navigationPrompt)
-        {
-            switch (navigationPrompt.Key)
-            {
-                case KeyPrompt.NavigationKey.Cancel:
-                    UpdateLog(context, true, true);
-                    return null;
-                case KeyPrompt.NavigationKey.Up:
-                    index = Math.Max(index - 1, 0);
-                    break;
-                case KeyPrompt.NavigationKey.Down:
-                    index = Math.Min(index + 1, items.Count - 1);
-                    break;
-                case KeyPrompt.NavigationKey.Confirm:
-                    UpdateLog(context, true);
-                    targetOption = items[index];
-                    return AskForValue(context);
-            }
+        var obj = key.UseTextMenu(menu);
+        UpdateLog();
+        return obj;
+    }
 
-            UpdateLog(context);
-            return navigationPrompt;
-        }
+    if (context.prompt is TextPrompt text)
+    {
+        //Set
+        var value = targetOption.value;
+        if (!context.parser.TryParse(targetOption.value?.GetType(), text.Text, out value))
+            throw new qCommandParseException(targetOption.value?.GetType(), text.Text);
 
-        if (context.prompt == valuePrompt)
-        {
-            //Set
-            var value = targetOption.value;
-            if (!(value is string))
-            {
-                try
-                {
-                    value = Convert.ChangeType(valuePrompt.Text, targetOption.value?.GetType());
-                }
-                catch
-                {
-                    throw new qCommandParseException(targetOption.value?.GetType(), valuePrompt.Text);
-                }
-            }
-
-            Manager.SetOption(targetOption.name, value);
-            return null;
-        }
-
-        //Normal
-        context.CheckArgumentCount(0, 2);
-
-        //changeoption
-        if (context.Length == 0)
-        {
-            listLog = null;
-            items = Manager.OptionsList.Select(x => x.Value)
-                .ToList();
-            UpdateLog(context);
-            return navigationPrompt;
-        }
-
-        //changeoption [option name]
-        if (context.Length == 1)
-        {
-            targetOption = GetOption(context[0].arg);
-            return AskForValue(context);
-        }
-
-        //changeoption [option name] [value]
-        targetOption = GetOption(context[0].arg);
-        var settType = targetOption.value?.GetType();
-        var val = context[1].GetValue(settType);
-
-        Manager.SetOption(targetOption.name, val);
+        Manager.SetOption(targetOption.name, value);
         return null;
     }
 
-    object AskForValue(qCommandContext context)
+    //Standard
+    context.CheckArgumentCount(0, 2);
+
+    //changeoption
+    if (context.Length == 0)
     {
-        context.Logs.Log("Enter value...");
-        return valuePrompt;
+        listLog = null;
+        CreateMenu(context.Logs);
+        UpdateLog();
+        return new KeyPrompt();
     }
 
-    void UpdateLog(qCommandContext context, bool final = false, bool cancelled = false)
+    //changeoption [option name]
+    if (context.Length == 1)
     {
-        if (listLog == null)
-            listLog = qLog.CreateNow("");
-
-        StringBuilder txt = new StringBuilder(final ? "Setting Selected" : "Select Setting");
-        for (int i = 0; i < items.Count; i++)
-        {
-            txt.Append("\n");
-            txt.Append(i == index ? (final ? "]" : ">") : " ");
-            txt.Append($" {items[i].name}: {items[i].value}");
-        }
-
-        listLog.message = txt.ToString();
-        context.Logs.Log(listLog);
+        targetOption = GetOption(context[0].arg);
+        return AskForValue(context.Logs);
     }
 
-    Options.OptionsList.ListItem GetOption(string settingName)
-    {
-        if (!Manager.OptionsList.ContainsKey(settingName))
-            throw new qCommandException($"Setting '{settingName}' does not exist!");
+    //changeoption [option name] [value]
+    targetOption = GetOption(context[0].arg);
+    var val = GetValueFromArg(context[1], targetOption.value?.GetType());
 
-        return Manager.OptionsList[settingName];
-    }
+    Manager.SetOption(targetOption.name, val);
+    return null;
 }
 ```
 

@@ -8,7 +8,7 @@ title: Initializing qInstance
 To make the experience of using qASIC smoother, it is highly recommended to create a qInstance at the beginning of your project's lifetime.
 
 :::note
-**THIS IS OPTIONAL!** qASIC will work just fine without a qInstance, but most systems won't be able to communicate with each other.
+**THIS IS OPTIONAL** - qASIC will work just fine without a qInstance, but most systems won't be able to communicate with each other.
 :::
 
 ## Features of qInstance
@@ -43,7 +43,7 @@ QasicInstance.Start();
 ## For Stride
 
 1. Create a new script and paste this code to it.
-```csharp
+```csharp title="qInit.cs"
 using qASIC;
 using System.Diagnostics;
 

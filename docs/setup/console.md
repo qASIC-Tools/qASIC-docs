@@ -44,7 +44,7 @@ var console = new qConsole("MAIN", cmds);
 
 1. Create a new script and paste this code to it.
 
-```csharp
+```csharp title="qConsoleMainInit.cs"
 //TODO: polish up this script
 using qASIC;
 using qASIC.Console;

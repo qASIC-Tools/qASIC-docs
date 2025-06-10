@@ -87,8 +87,8 @@ const config = {
         copyright: `©Dock Frankenstein ${new Date().getFullYear()}. Made with Docusaurus`,
       },
       prism: {
-        theme: require('prism-react-renderer/themes/vsDark'),
-        darkTheme: require('prism-react-renderer/themes/vsDark'),
+        theme: require('prism-react-renderer/themes/okaidia'),
+        darkTheme: require('prism-react-renderer/themes/okaidia'),
         additionalLanguages: ['csharp'],
       },
     }),
