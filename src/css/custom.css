@@ -13,6 +13,10 @@
   --ifm-code-font-size: 95%;
 }
 
+html[data-theme='light'] {
+  background-color: white;
+}
+
 html[data-theme='dark'] {
   --ifm-color-primary: #00b3ff;
   --ifm-color-primary-dark: #00a1e6;
