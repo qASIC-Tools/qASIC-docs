@@ -56,6 +56,21 @@ html[data-theme='dark'] .docusaurus-highlight-code-line
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+code
+{
+  border-radius: 4px;
+}
+
+.theme-admonition
+{
+  border-radius: 0px;
+}
+
+.breadcrumbs__link
+{
+  border-radius: 4px;
+}
+
 /* Images */
 .navbar-download-link:before, 
 .navbar-website-link:before,
@@ -101,4 +116,80 @@ html[data-theme='dark'] .navbar-github-link:before
 {
   background: url("https://media.qasictools.com/files/social/gt-white.svg")
     no-repeat;
+}
+
+li:before
+{
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  padding: 0px 4px;
+  margin-top: 16px;
+  margin-right: 4px;
+  font-size: 0.8rem;
+  display: flex;
+}
+
+html[data-theme='light'] li:before
+{
+  color: #555555;
+  border-bottom-color: #f0f0f0;
+}
+
+html[data-theme='dark'] li:before
+{
+  color: #cccccc;
+  border-bottom-color: #292929;
+}
+
+.theme-doc-sidebar-menu li > div > a:before, 
+.theme-doc-sidebar-menu li > a:before
+{
+  position: absolute;
+  top: 28px;
+  left: 18px;
+  font-size: 0.6rem;
+  border-width: 0px;
+  border-left-width: 4px;
+  border-style: solid;
+  padding: 4px;
+}
+
+html[data-theme='light'] .theme-doc-sidebar-menu li > div > a:before, 
+html[data-theme='light'] .theme-doc-sidebar-menu a:before
+{
+  background-color: #efefef;
+  border-color: #cccccc;
+}
+
+html[data-theme='dark'] .theme-doc-sidebar-menu li > div > a:before, 
+html[data-theme='dark'] .theme-doc-sidebar-menu a:before
+{
+  background-color: #333333;
+  border-color: #666666;
+}
+
+.side-header-getting-started:before
+{
+  content: 'Getting Started';
+}
+
+.side-header-systems:before
+{
+  content: 'Systems';
+}
+
+.side-header-systems > div > a
+{
+  padding-bottom: 28px;
+}
+
+.side-requires-console > a, .side-requires-console > div > a
+{
+  padding-bottom: 28px;
+  position: relative;
+}
+
+.side-requires-console > a:before, .side-requires-console > div > a:before
+{
+  content: 'Requires qASIC.Console';
 }

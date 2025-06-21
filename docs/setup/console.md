@@ -1,6 +1,7 @@
 ---
 sidebar_position: 2
 title: Initializing qConsole
+sidebar_class_name: side-requires-console
 ---
 
 # Initializing qConsole

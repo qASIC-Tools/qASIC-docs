@@ -1,4 +1,5 @@
 {
     "label": "qConsole",
-    "position": 101
+    "position": 101,
+    "className": "side-header-systems side-requires-console"
 }

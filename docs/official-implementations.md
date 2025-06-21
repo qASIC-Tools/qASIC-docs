@@ -1,6 +1,7 @@
 ---
 title: Official Implementations
-sidebar_position: 1
+sidebar_position: 2
+sidebar_class_name: side-header-getting-started
 ---
 
 # Official Implementations
