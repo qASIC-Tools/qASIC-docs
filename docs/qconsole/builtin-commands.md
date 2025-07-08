@@ -25,7 +25,7 @@ These are commands that are added by default or when calling `AddBuiltInCommands
 
 All of these commands can be configured in the console configuration file.
 
-```python
+```qark
 # General template for every built-in command
 --- commandList.commandConfig.clear ---
 commandName = clear

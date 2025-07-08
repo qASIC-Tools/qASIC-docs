@@ -113,7 +113,7 @@ The "example" name is also optional ;)
 
 The console can be configured in a `.qark` file. Here's an example configuration:
 
-```python
+```qark
 # Used for identifying the console in the Remote Inspector
 name = example
 # When true, the console becomes a singleton

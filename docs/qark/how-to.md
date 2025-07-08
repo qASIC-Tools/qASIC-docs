@@ -11,7 +11,7 @@ This page isn't finished yet and will be improved in the future.
 
 At it's core, everything in qARK is a path pointing to a value.
 
-```python
+```qark
 example.0.name = Example
 example.0.description = Description of the example
 example.1.name = Other example
@@ -48,14 +48,14 @@ Of course, serialization like this by itself is quite annoying, which is why qAR
 
 As many markup languages, qARK supports comments, which are defined by preceding a line with `#`.
 
-```python
+```qark
 # I am a comment
 ```
 
 :::warning
 Comments must be defined in a separate line.
 
-```python
+```qark
 # This is a comment
 example = hello # This is not a comment
 ```
@@ -67,7 +67,7 @@ The value of `example` is `hello # This is not a comment`.
 
 A group gives a prefix for all entry paths below it. For example:
 
-```python
+```qark
 config.version = 3.0
 
 --- config.user ---
@@ -77,7 +77,7 @@ startMinimized = True
 
 ...would be the same as...
 
-```python
+```qark
 config.version = 3.0
 
 config.user.name = Harold
@@ -88,7 +88,7 @@ config.user.startMinimized = True
 
 A group can be closed by writing `---`
 
-```python
+```qark
 --- settings ---
 # Full path: settings.resolutionX
 resolutionX = 1920
@@ -104,7 +104,7 @@ currentLevel = level3
 
 Entries can be defined by assigning multiple values to the same path.
 
-```python
+```qark
 colors = red
 colors = green
 colors = blue
@@ -123,7 +123,7 @@ var colors = new string[]
 
 To avoid having to retype the same path over and over, we can use an **array item entry** instead.
 
-```python
+```qark
 colors = red
 * green
 * blue
@@ -133,14 +133,14 @@ Values prefixed with a `*` will create new entries that copy the previous entry'
 
 But this can still be better. It's possible to create entries that contain no value, by writing out a path and ending it with a `|`.
 
-```python
+```qark
 # This entry has no value
 colors|
 ```
 
 By itself, this is useless, but combined with the **array item entry**, we can do this:
 
-```python
+```qark
 colors|
 * red
 * green
@@ -163,7 +163,7 @@ public struct Item
 
 This is where we use object arrays. In short: put a number in the path to identify items.
 
-```python
+```qark
 items.0.name = "Item 1"
 items.0.value = 1
 items.1.name = "Item 2"
@@ -191,7 +191,7 @@ var items = new List<Item>()
 :::warning
 The actual numbers aren't important. When deserializing, new items will be created when their path for the item will be different.
 
-```python
+```qark
 # This will create new items "Item 1" and "Item 2"
 # It's possible to use other values than just numbers, but it's not recommended
 items.asd.name = Item 1
@@ -208,7 +208,7 @@ To further improve on the experience, you can use `@` and `_` instead of the num
 | `@` | Get's replaced by an incremented number. |
 | `_` | Get's replaced by the previous number. |
 
-```python
+```qark
 items.@.name = Item 1
 items._.value = 1
 items.@.name = Item 2
@@ -217,7 +217,7 @@ items._.value = 7
 
 ...is the same as...
 
-```python
+```qark
 items.0.name = Item 1
 items.0.value = 1
 items.1.name = Item 2
@@ -227,7 +227,7 @@ items.1.value = 7
 :::note
 These numbers are path-specific. When used on a path with a different beginning, the number will start over from 0.
 
-```python
+```qark
 # Full path: items.0.name
 items.@.name = Item 1
 # Full path: otherItems.0.name

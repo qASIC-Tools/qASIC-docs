@@ -193,3 +193,9 @@ html[data-theme='dark'] .theme-doc-sidebar-menu a:before
 {
   content: 'Requires qASIC.Console';
 }
+
+/* qARK */
+.theme-code-block.language-qark .token.group
+{
+  color: green;
+}
