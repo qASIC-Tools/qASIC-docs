@@ -14,10 +14,10 @@ These are commands that are added by default or when calling `AddBuiltInCommands
 | Name | Aliases | Description |
 | :-- | :-- | :-- |
 | `clear` | `cls`, `clr` | Clears the console. |
-| `echo` | `print` | Echos a message. |
+| `echo` | `print` | Loggs the provided message to the console. |
 | `exit` | `quit` | Closes the application. |
 | `helloworld` | `hello` | Logs a test message to the console. |
-| `help` | none | Displays a list of all available commands. |
+| `help` | none | Displays a list of all available commands or a detailed description of a command. |
 | `remote` | none | Shows information about the remote inspector server. |
 | `sleep` | `wait` | Does nothing for the specified amount of time. |
 | `unstick` | none | Unsticks all logs marked as sticky. |
