@@ -5,6 +5,8 @@ sidebar_position: 4
 
 # Executing
 
+## Code Setup
+
 This is how you execute a command.
 
 ```csharp title="Example.cs"
@@ -51,3 +53,99 @@ var wrongHeight = console.Execute("playerheight");
 var correctHeight = await console.ExecuteAsync("playerheight");
 ```
 :::
+
+## Syntax
+
+When executing, the input string gets passed to a `ConsoleParser`, which executes commands based on the provided input string. qASIC includes the `QuashParser` and uses it by default.
+
+### Quash Parser Syntax
+
+The Quash parser has a simular syntax to [Bash](https://www.w3schools.com/bash/index.php) (the thing that is used in the Linux command line). Do keep in note, quash is much less advanced and varies in certain areas.
+
+#### Command
+
+To run a command, simply provide the command name in the input string
+
+```
+help
+```
+
+Quash will ignore empty characters at the beginning and will only read the command name up to the first empty character.
+
+```
+   help
+```
+
+This will execute the command `help`.
+
+```
+   help me
+```
+
+This will execute the command `help`.
+
+#### Arguments
+
+Arguments are provided after the command name and are separated by whitespace characters.
+
+```
+help echo
+```
+
+This will execute the command `help` with the argument `echo`.
+
+There is no limit to how many arguments you can provide, but the command can fail to execute properly if the number is missmatched.
+
+#### White spaces
+
+Due to arguments being separated by white spaces, running a command such as this can provide a different result to what you might expect.
+
+```
+echo hello world!
+```
+
+This will execute the command `echo` with the arguments `hello` and `world!` and result in an error "Too many arguments".
+
+To include a whitespace character, or any other special character, use `\`.
+
+```
+echo hello\ world!
+```
+
+This will execute the command `help` with the argument `hello world!`.
+
+You can also wrap the argument in `"`, `'`, or `` ` ``.
+
+```
+echo "hello world!"
+```
+
+This will execute the command `help` with the argument `hello world!`.
+
+These operations can be chained.
+
+```
+echo "I am saying \"hello world!\""
+```
+
+This will execute the command `help` with the argument `I am saying "hello world!"`.
+
+#### Execute a command after another
+
+Commands can be combined to be executed one after another, by separating them into multiple lines, or splitting them using `;`.
+
+```
+echo first
+echo second
+```
+
+This will execute the command `echo` with the argument `first` and then execute the command `echo` with the argument `second`.
+
+The second command will wait until the first one finishes executing, so in the case of using an [async command](commands#async-commands), the commands won't be running at the same time.
+
+```
+echo first; sleep 2s; echo second
+```
+
+This will execute the command `echo` with the argument `first`, then it will execute the command `sleep` with the argument `2s`, which will make the console wait for 2s, after which it will execute the command `echo` with the argument `second`.
+

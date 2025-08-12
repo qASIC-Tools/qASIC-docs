@@ -1,10 +1,9 @@
 ---
-sidebar_position: 2
-title: Initializing qConsole
-sidebar_class_name: side-requires-console
+sidebar_position: 0
+title: Initializing
 ---
 
-# Initializing qConsole
+# Initializing
 
 If you want to use a cheat console in your project, you will have to first initialize it's instance.
 

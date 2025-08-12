@@ -27,99 +27,83 @@ html[data-theme='dark'] {
   --ifm-color-primary-lightest: #4dcaff;
 }
 
-*
-{
+* {
   font-family: 'Spartan', sans-serif;
 }
 
-code *
-{
+code * {
   font-family: 'Source Code Pro', monospace;
 }
 
-footer
-{
+footer {
   padding: 10px !important;
   background-color: #424242 !important;
 }
 
-.docusaurus-highlight-code-line 
-{
+.docusaurus-highlight-code-line  {
   background-color: rgba(0, 0, 0, 0.1);
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
 }
 
-html[data-theme='dark'] .docusaurus-highlight-code-line 
-{
+html[data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-code
-{
+code {
   border-radius: 4px;
 }
 
-.theme-admonition
-{
-  border-radius: 0px;
+.theme-admonition {
+  border-radius: 4px;
 }
 
-.breadcrumbs__link
-{
+.breadcrumbs__link {
   border-radius: 4px;
 }
 
 /* Images */
 .navbar-download-link:before, 
 .navbar-website-link:before,
-.navbar-github-link:before
-{
+.navbar-github-link:before {
   content: '';
   width: 24px;
   height: 24px;
   display: flex;
 }
 
-.navbar-download-link:before
-{
+.navbar-download-link:before {
   background: url("https://media.qasictools.com/files/generic/download-black.svg")
     no-repeat;
 }
 
-html[data-theme='dark'] .navbar-download-link:before
-{
+html[data-theme='dark'] .navbar-download-link:before {
   background: url("https://media.qasictools.com/files/generic/download-white.svg")
     no-repeat;
 }
 
-.navbar-website-link:before
-{
+.navbar-website-link:before {
   background: url("https://media.qasictools.com/files/generic/website-black.svg")
   no-repeat;
 }
 
-html[data-theme='dark'] .navbar-website-link:before
-{
+html[data-theme='dark'] .navbar-website-link:before {
   background: url("https://media.qasictools.com/files/generic/website-white.svg")
   no-repeat;
 }
 
-.navbar-github-link:before
-{
+.navbar-github-link:before {
   background: url("https://media.qasictools.com/files/social/gt.svg")
     no-repeat;
 }
 
-html[data-theme='dark'] .navbar-github-link:before 
-{
+html[data-theme='dark'] .navbar-github-link:before {
   background: url("https://media.qasictools.com/files/social/gt-white.svg")
     no-repeat;
 }
 
-li:before
-{
+li:before {
   border-bottom-width: 2px;
   border-bottom-style: solid;
   padding: 0px 4px;
@@ -129,21 +113,18 @@ li:before
   display: flex;
 }
 
-html[data-theme='light'] li:before
-{
+html[data-theme='light'] li:before {
   color: #555555;
   border-bottom-color: #f0f0f0;
 }
 
-html[data-theme='dark'] li:before
-{
+html[data-theme='dark'] li:before {
   color: #cccccc;
   border-bottom-color: #292929;
 }
 
 .theme-doc-sidebar-menu li > div > a:before, 
-.theme-doc-sidebar-menu li > a:before
-{
+.theme-doc-sidebar-menu li > a:before {
   position: absolute;
   top: 28px;
   left: 18px;
@@ -152,50 +133,43 @@ html[data-theme='dark'] li:before
   border-left-width: 4px;
   border-style: solid;
   padding: 4px;
+  border-radius: 4px;
 }
 
 html[data-theme='light'] .theme-doc-sidebar-menu li > div > a:before, 
-html[data-theme='light'] .theme-doc-sidebar-menu a:before
-{
+html[data-theme='light'] .theme-doc-sidebar-menu a:before {
   background-color: #efefef;
   border-color: #cccccc;
 }
 
 html[data-theme='dark'] .theme-doc-sidebar-menu li > div > a:before, 
-html[data-theme='dark'] .theme-doc-sidebar-menu a:before
-{
+html[data-theme='dark'] .theme-doc-sidebar-menu a:before {
   background-color: #333333;
   border-color: #666666;
 }
 
-.side-header-getting-started:before
-{
+.side-header-getting-started:before {
   content: 'Getting Started';
 }
 
-.side-header-systems:before
-{
+.side-header-systems:before {
   content: 'Systems';
 }
 
-.side-header-systems > div > a
-{
+.side-header-systems > div > a {
   padding-bottom: 28px;
 }
 
-.side-requires-console > a, .side-requires-console > div > a
-{
+.side-requires-console > a, .side-requires-console > div > a {
   padding-bottom: 28px;
   position: relative;
 }
 
-.side-requires-console > a:before, .side-requires-console > div > a:before
-{
+.side-requires-console > a:before, .side-requires-console > div > a:before {
   content: 'Requires qASIC.Console';
 }
 
 /* qARK */
-.theme-code-block.language-qark .token.group
-{
+.theme-code-block.language-qark .token.group {
   color: green;
 }

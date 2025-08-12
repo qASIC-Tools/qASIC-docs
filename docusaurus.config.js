@@ -84,7 +84,7 @@ const config = {
       },
       footer: {
         style: 'dark',
-        copyright: `©Dock Frankenstein ${new Date().getFullYear()}. Made with Docusaurus`,
+        copyright: `ferafiks ${new Date().getFullYear()}. Made with Docusaurus`,
       },
       prism: {
         theme: require('prism-react-renderer/themes/okaidia'),
