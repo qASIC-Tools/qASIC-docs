@@ -1,15 +1,15 @@
 ---
 sidebar_position: 1
-title: How To
+title: The Format
 ---
 
-# How To
+# The Format
 
 :::note
 This page isn't finished yet and will be improved in the future.
 :::
 
-At it's core, everything in qARK is a path pointing to a value.
+At it's core, qARK is a list of values being assigned to a path.
 
 ```qark
 example.0.name = Example
@@ -18,7 +18,7 @@ example.1.name = Other example
 example.1.description = Lorem ipsum dolor sit amet
 ```
 
-In C#, this would look like this
+This exaxmple could be used to describe the contents of this in C#.
 
 ```csharp
 var example = new List<ExampleItem>()
@@ -42,7 +42,7 @@ public struct ExampleItem
 }
 ```
 
-Of course, serialization like this by itself is quite annoying, which is why qARK supports other elements.
+Of course, serialization like this by itself is quite annoying, which is where the other types of elements come in.
 
 ## Comments
 
@@ -147,6 +147,40 @@ colors|
 * blue
 ```
 
+:::tip Good practices
+1. When creating an array, define the path as a **array head entry** and it's values as **array item entries**.
+```qark
+# Correct
+array|
+* item 1
+* item 2
+* item 3
+
+# Will work, but makes editing more difficult
+array = item 1
+* item 2
+* item 3
+
+# Will work, but degrades readibility
+array = item 1
+array = item 2
+array = item 3
+```
+
+2. Don't scatter array items over the document.
+```qark
+array|
+* item 1
+
+...
+
+# Makes it more difficult to see the values of "array" at a glance.
+array|
+* item 2
+* item 2
+```
+:::
+
 ## Object arrays
 
 Array entries are great for arrays of single values. However, what if we want to serialize something like this:
@@ -170,7 +204,7 @@ items.1.name = "Item 2"
 items.1.value = 7
 ```
 
-In C# this would look like this:
+In C#, the above could represent a structure like this:
 
 ```csharp
 var items = new List<Item>()
@@ -239,4 +273,22 @@ otherItems.@.name = Item 3
 items.@.name = Item 4
 :::
 
+:::tip Good practives
+1. Place array objects inside groups and use `@` and `_` for sub arrays.
 
+```qark
+--- items.@ ---
+name = Item 1
+children.@.name = Child 1
+children._.age = 1
+children.@.name = Child 2
+children._.age = 2
+---
+
+--- items.@ ---
+name = Item 2
+children.@.name = Child 1
+children._.age = 1
+---
+```
+:::
