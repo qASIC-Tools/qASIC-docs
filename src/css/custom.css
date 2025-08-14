@@ -64,33 +64,14 @@ code {
 }
 
 /* Images */
-.navbar-download-link:before, 
-.navbar-website-link:before,
 .navbar-github-link:before {
   content: '';
-  width: 24px;
-  height: 24px;
-  display: flex;
-}
-
-.navbar-download-link:before {
-  background: url("https://media.qasictools.com/files/generic/download-black.svg")
-    no-repeat;
-}
-
-html[data-theme='dark'] .navbar-download-link:before {
-  background: url("https://media.qasictools.com/files/generic/download-white.svg")
-    no-repeat;
-}
-
-.navbar-website-link:before {
-  background: url("https://media.qasictools.com/files/generic/website-black.svg")
-  no-repeat;
-}
-
-html[data-theme='dark'] .navbar-website-link:before {
-  background: url("https://media.qasictools.com/files/generic/website-white.svg")
-  no-repeat;
+  height: 18px;
+  width: 18px;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+  margin-bottom: 5px;
 }
 
 .navbar-github-link:before {

@@ -65,20 +65,17 @@ const config = {
         },
         items: [
           {
-            position: 'right',
-            className: 'navbar-download-link',
-            href: 'https://qasictools.com/download',
-          },
-          {
-            position: 'right',
+            position: 'left',
+            label: "Website",
             className: 'navbar-website-link',
             href: 'https://qasictools.com',
           },
           {
             className: "navbar-github-link",
             "aria-label": "GitHub repository",
-            position: 'right',
-            href: 'https://github.com/DockFrankenstein/qASIC',
+            label: "Github",
+            position: 'left',
+            href: 'https://github.com/qASIC-Tools/qASIC',
           },
         ],
       },
